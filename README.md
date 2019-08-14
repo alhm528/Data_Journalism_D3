@@ -4,7 +4,7 @@
 
 ## Income vs. Obesity Visualization
 
-![Income vs. Obesity](Images/visualization.PNG)
+![Income vs. Obesity](Images/Visualization.PNG)
 
 
 ## Copyright
