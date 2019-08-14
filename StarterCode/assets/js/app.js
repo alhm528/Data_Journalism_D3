@@ -17,14 +17,12 @@ var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
 // Create the canvas to append the SVG group that contains the states data
-// Give the canvas width and height calling the variables predifined.
 var svg = d3.select("#scatter")
     .append("svg")
     .attr("width", svgWidth)
     .attr("height", svgHeight);
 
 // Create the chartGroup that will contain the data
-// Use transform attribute to fit it within the canvas
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -50,7 +48,6 @@ function successHandle(statesData) {
     });
 
     //  Create scale functions
-    // Linear Scale takes the min to be displayed in axis, and the max of the data
     var xLinearScale = d3.scaleLinear()
         .domain([35000, d3.max(statesData, d => d.income)])
         .range([0, width]);
@@ -66,19 +63,14 @@ function successHandle(statesData) {
         .ticks(9);
     var leftAxis = d3.axisLeft(yLinearScale);
 
-
-
-
     // Append the axes to the chart group 
     // Bottom axis moves using height 
     chartGroup.append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
-    // Left axis is already at 0,0
     // Only append the left axis 
     chartGroup.append("g")
         .call(leftAxis);
-
 
     // Create Circles for scatter plot
     var circlesGroup = chartGroup.selectAll("circle")
@@ -105,8 +97,7 @@ function successHandle(statesData) {
         .style('fill', 'white')
         .text(d => (d.abbr));
 
-    // Step 6: Initialize tool tip
-    // ==============================
+    //Initialize tool tip
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
         .offset([80, -60])
@@ -114,16 +105,14 @@ function successHandle(statesData) {
             return (`${d.state}<br>Income: ${d.income}<br>Obesity: ${d.obesity}% `);
         });
 
-    // Step 7: Create tooltip in the chart
-    // ==============================
+    //Create tooltip in the chart
     chartGroup.call(toolTip);
 
-    // Step 8: Create event listeners to display and hide the tooltip
-    // ==============================
+    //Create display the tooltip
     circlesGroup.on("mouseover", function (data) {
         toolTip.show(data, this);
     })
-        // onmouseout event
+        // hide tooltip
         .on("mouseout", function (data) {
             toolTip.hide(data);
         });
